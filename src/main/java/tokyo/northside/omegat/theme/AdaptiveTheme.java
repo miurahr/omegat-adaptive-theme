@@ -50,8 +50,8 @@ public class AdaptiveTheme extends BasicLookAndFeel {
     private static DarkLaf laf;
 
     public AdaptiveTheme() {
-        baseTheme = themeForPreferredStyle(getPreferredThemeStyle());
         laf = new DarkLaf();
+        baseTheme = themeForPreferredStyle(getPreferredThemeStyle());
     }
     private static ThemeProvider themeProvider;
 
@@ -145,7 +145,7 @@ public class AdaptiveTheme extends BasicLookAndFeel {
     }
 
     private UIDefaults getLightDefaults() {
-        UIDefaults defaults = super.getDefaults();
+        UIDefaults defaults = laf.getDefaults();
         defaults = DefaultFlatTheme.setDefaults(defaults, ID);
 
         Color standardBgColor = defaults.getColor("Panel.background");
@@ -244,7 +244,7 @@ public class AdaptiveTheme extends BasicLookAndFeel {
     }
 
     private UIDefaults getDarkDefaults() {
-        UIDefaults defaults = super.getDefaults();
+        UIDefaults defaults = laf.getDefaults();
 
         // get OmegaT defaults
         defaults = DefaultFlatTheme.setDefaults(defaults, ID);
