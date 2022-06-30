@@ -27,8 +27,6 @@ if (dotgit.exists()) {
 java {
     sourceCompatibility = JavaVersion.VERSION_1_8
     targetCompatibility = JavaVersion.VERSION_1_8
-    withSourcesJar()
-    withJavadocJar()
 }
 
 repositories {
@@ -42,6 +40,7 @@ omegat {
 
 dependencies {
     packIntoJar("com.github.weisj:darklaf-core:2.7.2")
+    packIntoJar("com.github.weisj:swing-dsl-laf-support:latest.integration")
 }
 
 checkstyle {

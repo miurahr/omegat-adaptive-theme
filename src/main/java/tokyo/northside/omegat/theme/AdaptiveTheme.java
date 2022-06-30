@@ -26,111 +26,67 @@ package tokyo.northside.omegat.theme;
 
 
 import com.github.weisj.darklaf.DarkLaf;
-import com.github.weisj.darklaf.platform.ThemePreferencesHandler;
-import com.github.weisj.darklaf.theme.Theme;
+import com.github.weisj.darklaf.LafManager;
 import com.github.weisj.darklaf.theme.info.ColorToneRule;
 import com.github.weisj.darklaf.theme.info.ContrastRule;
-import com.github.weisj.darklaf.theme.info.PreferredThemeStyle;
-import com.github.weisj.darklaf.theme.info.ThemeProvider;
 import org.omegat.gui.theme.DefaultFlatTheme;
 
 import javax.swing.UIDefaults;
 import javax.swing.UIManager;
 import javax.swing.border.MatteBorder;
-import javax.swing.plaf.basic.BasicLookAndFeel;
 import java.awt.Color;
-import java.awt.Insets;
 
 
-public class AdaptiveTheme extends BasicLookAndFeel {
-    private static final String NAME = "Adaptive theme";
-    private static final String ID = "AdaptiveTheme";
+/**
+ * @author Hiroshi Miura
+ */
+public class AdaptiveTheme extends DarkLaf {
+    private static final String NAME = "Adaptive Theme";
     private static final String DESCRIPTION = "Adaptive theme based on DarkLaf";
 
-    private static Theme baseTheme;
-    private static DarkLaf laf;
-
+    /**
+     * constructor.
+     * select theme from Windows/Mac user preference.
+     */
     public AdaptiveTheme() {
-        laf = new DarkLaf();
-        baseTheme = themeForPreferredStyle(getPreferredThemeStyle());
+        super();
+        // FIXME: this does not detect dark mode on Linux
+        setTheme(LafManager.getThemeProvider().getTheme(LafManager.getPreferredThemeStyle()));
     }
-    private static ThemeProvider themeProvider;
 
     public static void loadPlugins() {
-        UIManager.installLookAndFeel("Adaptive Theme", "tokyo.northside.omegat.theme.AdaptiveTheme");
+        UIManager.installLookAndFeel(NAME, AdaptiveTheme.class.getCanonicalName());
     }
 
     public static void unloadPlugins() {
     }
 
-    /**
-     * Gets the preferred theme style. If theme preference change reporting is enabled this may use
-     * native os settings to determine these values.
-     *
-     * @return the preferred theme style.
-     */
-    public static PreferredThemeStyle getPreferredThemeStyle() {
-        return ThemePreferencesHandler.getSharedInstance().getPreferredThemeStyle();
-    }
-
-    /**
-     * Get the current theme provider. The theme provider is responsible the produce available themes
-     * for a given preferred theme style.
-     *
-     * @return the theme provider.
-     * @see PreferredThemeStyle
-     */
-    public static ThemeProvider getThemeProvider() {
-        if (themeProvider == null) themeProvider = createDefaultThemeProvider();
-        return themeProvider;
-    }
-
-    /*
-     * Default theme provider. Defaults to IntelliJ/Darcula Light/Dark high contrast themes.
-     */
-    private static ThemeProvider createDefaultThemeProvider() {
-        return ThemeProvider.createDefault();
-    }
-
-    /**
-     * Get the associated theme for the given preferred style.
-     *
-     * @param style the preferred theme style.
-     * @return the associated Theme or best match if there is none associated.
-     */
-    public static Theme themeForPreferredStyle(final PreferredThemeStyle style) {
-        return getThemeProvider().getTheme(style);
-    }
-
-    /**
-     * Adjust a color by adding some constant to its RGB values, clamping to the
-     * range 0-255.
-     */
-    static Color adjustRGB(Color color, int adjustment) {
-        Color result = new Color(Math.max(0, Math.min(255, color.getRed() + adjustment)),
-                Math.max(0, Math.min(255, color.getGreen() + adjustment)),
-                Math.max(0, Math.min(255, color.getBlue() + adjustment)));
-        return result;
-    }
-
     public UIDefaults getDefaults() {
-        boolean dark = baseTheme.getColorToneRule() == ColorToneRule.DARK;
-        // boolean highContrast = baseTheme.getContrastRule() == ContrastRule.HIGH_CONTRAST;
-        if (dark) {
-            return getDarkDefaults();
+        boolean dark = getTheme().getColorToneRule() == ColorToneRule.DARK;
+        boolean highContrast = getTheme().getContrastRule() == ContrastRule.HIGH_CONTRAST;
+
+        // get OmegaT defaults
+        UIDefaults defaults = super.getDefaults();
+        DefaultFlatTheme.setDefaults(defaults, getID());
+        if (dark & highContrast) {
+            // FIXME: create high contract color sets
+            return setDarkDefaults(defaults);
+        } else if (dark) {
+            return setDarkDefaults(defaults);
+        } else if (highContrast) {
+            // FIXME: create high contract color sets
+            return setLightDefaults(defaults);
         } else {
-            return getLightDefaults();
+            return setLightDefaults(defaults);
         }
     }
 
-    public String getID() {
-        return ID;
-    }
-
+    @Override
     public String getName() {
         return NAME;
     }
 
+    @Override
     public String getDescription() {
         return DESCRIPTION;
     }
@@ -145,17 +101,12 @@ public class AdaptiveTheme extends BasicLookAndFeel {
         return true;
     }
 
-    private UIDefaults getLightDefaults() {
-        UIDefaults defaults = laf.getDefaults();
-        defaults = DefaultFlatTheme.setDefaults(defaults, ID);
-
+    private UIDefaults setLightDefaults(UIDefaults defaults) {
+        // set OmegaT color scheme for light theme.
         Color standardBgColor = defaults.getColor("Panel.background");
-        defaults.put("TextPane.background", Color.WHITE);
-
         // Borders
         Color borderColor = new Color(0x0f5e9c);
         defaults.put("OmegaTBorder.color", borderColor);
-        defaults.put("OmegaTDockablePanel.border", new MatteBorder(1, 1, 1, 1, borderColor));
 
         // OmegaT-defined Dockables.
         defaults.put("OmegaTDockablePanel.border", new MatteBorder(1, 1, 1, 1, borderColor));
@@ -213,7 +164,7 @@ public class AdaptiveTheme extends BasicLookAndFeel {
 
         // Panel title bars
         Color activeTitleText = defaults.getColor("Label.foreground");
-        Color activeTitleBgColor = adjustRGB(standardBgColor, 0xF6 - 0xEE);
+        Color activeTitleBgColor = adjustRGB(standardBgColor, 0xF6 - 0xED);
         Color inactiveTitleText = new Color(0x808080);
         defaults.put("InternalFrame.activeTitleForeground", activeTitleText);
         defaults.put("InternalFrame.activeTitleBackground", activeTitleBgColor);
@@ -229,17 +180,9 @@ public class AdaptiveTheme extends BasicLookAndFeel {
         return defaults;
     }
 
-    private UIDefaults getDarkDefaults() {
-        UIDefaults defaults = laf.getDefaults();
-
-        // get OmegaT defaults
-        defaults = DefaultFlatTheme.setDefaults(defaults, ID);
-
-        // GTK+ has bug that TextPane background is fixed white.
-        // https://sourceforge.net/p/omegat/bugs/1013/
+    private UIDefaults setDarkDefaults(UIDefaults defaults) {
+        // set OmegaT color scheme for dark theme.
         Color standardBgColor = defaults.getColor("Panel.background");
-        defaults.put("TextPane.background", standardBgColor);
-
         // Borders
         Color borderColor = new Color(0x8aa5b8);
         defaults.put("OmegaTBorder.color", borderColor);
@@ -310,6 +253,16 @@ public class AdaptiveTheme extends BasicLookAndFeel {
         defaults.put("inactiveCaptionBorder", borderColor);
 
         return defaults;
+    }
+
+    /**
+     * Adjust a color by adding some constant to its RGB values, clamping to the
+     * range 0-255.
+     */
+    private Color adjustRGB(final Color color, final int adjustment) {
+        return new Color(Math.max(0, Math.min(255, color.getRed() + adjustment)),
+                Math.max(0, Math.min(255, color.getGreen() + adjustment)),
+                Math.max(0, Math.min(255, color.getBlue() + adjustment)));
     }
 }
 
