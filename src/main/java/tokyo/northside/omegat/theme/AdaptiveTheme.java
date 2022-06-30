@@ -4,6 +4,7 @@
           glossaries, and translation leveraging into updated projects.
 
  Copyright (C) 2022 Hiroshi Miura
+ Copyright (c) 2019-2022 Jannis Weis
                Home page: http://www.omegat.org/
 
  This file is part of OmegaT.
