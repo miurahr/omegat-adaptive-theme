@@ -225,21 +225,6 @@ public class AdaptiveTheme extends BasicLookAndFeel {
         defaults.put("inactiveCaption", standardBgColor);
         defaults.put("inactiveCaptionBorder", borderColor);
 
-        // Standard components customize
-        defaults.put("Component.arrowType", "triangle");
-        defaults.put("Button.arc", 999);
-        defaults.put("Component.arc", 999);
-        defaults.put("CheckBox.arc", 999);
-        defaults.put("ProgressBar.arc", 999);
-        defaults.put("TextComponent.arc", 999);
-        defaults.put("ScrollBar.trackArc", 999);
-        defaults.put("ScrollBar.thumbArc", 999);
-        defaults.put("ScrollBar.trackInsets", new Insets(2, 4, 2, 4));
-        defaults.put("ScrollBar.thumbInsets", new Insets(2, 2, 2, 2));
-        defaults.put("ScrollBar.track", new Color(0xe0e0e0));
-        defaults.put("TabbedPane.tabSeparatorsFullHeight", true);
-        defaults.put("TabbedPane.selectedBackground", Color.white);
-
         return defaults;
     }
 
@@ -322,22 +307,6 @@ public class AdaptiveTheme extends BasicLookAndFeel {
         defaults.put("activeCaptionBorder", borderColor);
         defaults.put("inactiveCaption", standardBgColor);
         defaults.put("inactiveCaptionBorder", borderColor);
-
-        // Standard components customize
-        defaults.put("Component.arrowType", "triangle");
-        defaults.put("Button.arc", 999);
-        defaults.put("Component.arc", 999);
-        defaults.put("CheckBox.arc", 999);
-        defaults.put("ProgressBar.arc", 999);
-        defaults.put("TextComponent.arc", 999);
-        defaults.put("ScrollBar.trackArc", 999);
-        defaults.put("ScrollBar.thumbArc", 999);
-        defaults.put("ScrollBar.trackInsets", new Insets(3, 5, 3, 5));
-        defaults.put("ScrollBar.thumbInsets", new Insets(3, 3, 3, 3));
-        defaults.put("ScrollBar.width", 16);
-        defaults.put("ScrollBar.track", new Color(0x757575));
-        defaults.put("TabbedPane.tabSeparatorsFullHeight", true);
-        defaults.put("TabbedPane.selectedBackground", Color.GRAY);
 
         return defaults;
     }
