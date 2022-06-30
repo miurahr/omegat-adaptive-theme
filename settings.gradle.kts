@@ -1,1 +1,1 @@
-rootProject.name = "theme-skeleton"
+rootProject.name = "omegat-darklaf"

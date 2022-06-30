@@ -13,12 +13,12 @@ repositories {
 }
 
 omegat {
-    version = "5.6.0"
-    pluginClass = "org.omegat.gui.theme.ThemeSkeleton"
+    version = "5.7.1"
+    pluginClass = "tokyo.northside.omegat.theme.AdaptiveTheme"
 }
 
 dependencies {
-    packIntoJar("com.formdev:flatlaf:1.2")
+    packIntoJar("com.github.weisj:darklaf-core:2.7.2")
 }
 
 checkstyle {
