@@ -3,12 +3,8 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
-### Add
-- foo
-- boo
+## v0.1.0
 
-### Changed
+* First public pre-release.
 
-### Fixed
-
-[Unreleased]: https://github.com/omegat-org/theme-skelton/compare/v0.1...HEAD
+[Unreleased]: https://github.com/miurahr/omegat-adaptive-theme/compare/v0.1.0...HEAD
