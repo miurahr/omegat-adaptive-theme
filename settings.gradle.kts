@@ -1,1 +1,1 @@
-rootProject.name = "omegat-darklaf"
+rootProject.name = "omegat-adaptive-theme"
