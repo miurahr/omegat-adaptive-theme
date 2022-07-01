@@ -27,8 +27,11 @@ package tokyo.northside.omegat.theme;
 
 import com.github.weisj.darklaf.DarkLaf;
 import com.github.weisj.darklaf.LafManager;
+import com.github.weisj.darklaf.theme.DarculaTheme;
+import com.github.weisj.darklaf.theme.Theme;
 import com.github.weisj.darklaf.theme.spec.ColorToneRule;
 import com.github.weisj.darklaf.theme.spec.ContrastRule;
+import com.github.weisj.darklaf.theme.spec.PreferredThemeStyle;
 import org.omegat.gui.theme.DefaultFlatTheme;
 
 import javax.swing.UIDefaults;
@@ -44,14 +47,12 @@ public class AdaptiveTheme extends DarkLaf {
     private static final String NAME = "Adaptive Theme";
     private static final String DESCRIPTION = "Adaptive theme based on DarkLaf";
 
+
     /**
-     * constructor.
-     * select theme from Windows/Mac user preference.
+     * Default constructor.
      */
     public AdaptiveTheme() {
         super();
-        // FIXME: this does not detect dark mode on Linux
-        setTheme(LafManager.getThemeProvider().getTheme(LafManager.getPreferredThemeStyle()));
     }
 
     public static void loadPlugins() {
@@ -62,7 +63,11 @@ public class AdaptiveTheme extends DarkLaf {
     }
 
     public UIDefaults getDefaults() {
-        boolean dark = getTheme().getColorToneRule() == ColorToneRule.DARK;
+        // XXX: this does not detect dark mode on Linux
+        PreferredThemeStyle style = LafManager.getPreferredThemeStyle();
+        Theme theme = LafManager.getThemeProvider().getTheme(style);
+        setTheme(theme);
+        boolean dark = theme.getColorToneRule() == ColorToneRule.DARK;
         boolean highContrast = getTheme().getContrastRule() == ContrastRule.HIGH_CONTRAST;
 
         // get OmegaT defaults
