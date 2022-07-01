@@ -27,8 +27,8 @@ package tokyo.northside.omegat.theme;
 
 import com.github.weisj.darklaf.DarkLaf;
 import com.github.weisj.darklaf.LafManager;
-import com.github.weisj.darklaf.theme.info.ColorToneRule;
-import com.github.weisj.darklaf.theme.info.ContrastRule;
+import com.github.weisj.darklaf.theme.spec.ColorToneRule;
+import com.github.weisj.darklaf.theme.spec.ContrastRule;
 import org.omegat.gui.theme.DefaultFlatTheme;
 
 import javax.swing.UIDefaults;
