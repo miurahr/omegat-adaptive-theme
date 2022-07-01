@@ -40,7 +40,7 @@ omegat {
 
 dependencies {
     packIntoJar("com.github.weisj:darklaf-core:3.0.0")
-    packIntoJar("com.github.weisj:swing-dsl-laf-support:latest.integration")
+    packIntoJar("com.github.weisj:swing-dsl-laf-support:0.1.0")
 }
 
 checkstyle {
